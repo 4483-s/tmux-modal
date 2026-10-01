@@ -170,7 +170,7 @@ tmux list-keys -T root | \
     grep -E -v " +set-option key-table $KT_CMD" | \
     sed -e "s/\(^bind-key -T\) root/\1 $KT_CMD/g" > $KBD_FILE
 
-cat << EOF >> "$KBD_FILE"
+>> "$KBD_FILE" printf %s "\
 
 bind-key -T root $KBD_CMD set-option key-table $KT_CMD
 bind-key -T $KT_CMD $KBD_CMD_EXIT set-option key-table root
@@ -180,7 +180,7 @@ bind-key -T $KT_CMD $KBD_COPY_MODE $CMD_COPY_MODE
 bind-key -T $KT_CMD $KBD_PASTE $CMD_PASTE
 
 bind-key -T $KT_CMD $KBD_CMD_PROMPT $CMD_CMD_PROMPT
-EOF
+"
 
 # window.
 KT_WIN=$KT_PREFIX-window
@@ -197,7 +197,7 @@ if [ "$ALWAYS_STICKY_VAL" == on ]; then
     BIND_KEY_KBD_WIN+=" set-option key-table $KT_WIN_PANE"
 fi
 
-cat << EOF >> "$KBD_FILE"
+>> "$KBD_FILE" printf %s "\
 
 $BIND_KEY_KBD_WIN
 
@@ -234,10 +234,10 @@ bind-key -T $KT_WIN $KBD_WIN_SPLIT switch-client -T $KT_WIN_SPLIT
 bind-key -T $KT_WIN $KBD_WIN_MOVE switch-client -T $KT_WIN_MOVE
 bind-key -T $KT_WIN $KBD_WIN_ARRANGE switch-client -T $KT_WIN_ARRANGE
 bind-key -T $KT_WIN $KBD_WIN_RESIZE set-option key-table $KT_WIN_RESIZE
-EOF
+"
 
 # window-pane.
-cat << EOF >> "$KBD_FILE"
+>> "$KBD_FILE" printf %s "\
 
 bind-key -T $KT_WIN_PANE $KBD_WIN_GOTO_0 $CMD_WIN_GOTO_0
 bind-key -T $KT_WIN_PANE $KBD_WIN_GOTO_1 $CMD_WIN_GOTO_1
@@ -274,33 +274,33 @@ bind-key -T $KT_WIN_PANE $KBD_WIN_RESIZE set-option key-table $KT_WIN_RESIZE
 
 bind-key -T $KT_WIN_PANE $KBD_QUIT set-option key-table $KT_CMD
 bind-key -T $KT_WIN_PANE $KBD_CMD_EXIT set-option key-table root
-EOF
+"
 
 # window-split.
-cat << EOF >> "$KBD_FILE"
+>> "$KBD_FILE" printf %s "\
 
 bind-key -T $KT_WIN_SPLIT $KBD_WIN_SPLIT_RIGHT $CMD_WIN_SPLIT_RIGHT
 bind-key -T $KT_WIN_SPLIT $KBD_WIN_SPLIT_DOWN $CMD_WIN_SPLIT_DOWN
-EOF
+"
 
 # window-move.
-cat << EOF >> "$KBD_FILE"
+>> "$KBD_FILE" printf %s "\
 
 bind-key -T $KT_WIN_MOVE $KBD_WIN_MOVE_UP $CMD_WIN_MOVE_UP
 bind-key -T $KT_WIN_MOVE $KBD_WIN_MOVE_DOWN $CMD_WIN_MOVE_DOWN
-EOF
+"
 
 # window-arrange.
-cat << EOF >> "$KBD_FILE"
+>> "$KBD_FILE" printf %s "\
 
 bind-key -T $KT_WIN_ARRANGE $KBD_WIN_ARRANGE_1 $CMD_WIN_ARRANGE_1
 bind-key -T $KT_WIN_ARRANGE $KBD_WIN_ARRANGE_2 $CMD_WIN_ARRANGE_2
 bind-key -T $KT_WIN_ARRANGE $KBD_WIN_ARRANGE_3 $CMD_WIN_ARRANGE_3
 bind-key -T $KT_WIN_ARRANGE $KBD_WIN_ARRANGE_4 $CMD_WIN_ARRANGE_4
-EOF
+"
 
 # window-resize.
-cat << EOF >> "$KBD_FILE"
+>> "$KBD_FILE" printf %s "\
 
 bind-key -T $KT_WIN_RESIZE $KBD_WIN_RESIZE_LEFT $CMD_WIN_RESIZE_LEFT
 bind-key -T $KT_WIN_RESIZE $KBD_WIN_RESIZE_RIGHT $CMD_WIN_RESIZE_RIGHT
@@ -314,11 +314,11 @@ bind-key -T $KT_WIN_RESIZE $KBD_WIN_RESIZE_MULTI_UP $CMD_WIN_RESIZE_MULTI_UP
 
 bind-key -T $KT_WIN_RESIZE $KBD_QUIT set-option key-table $KT_CMD
 bind-key -T $KT_WIN_RESIZE $KBD_CMD_EXIT set-option key-table root
-EOF
+"
 
 # session.
 KT_SESS=$KT_PREFIX-session
-cat << EOF >> "$KBD_FILE"
+>> "$KBD_FILE" printf %s "\
 
 bind-key -T $KT_CMD $KBD_SESS switch-client -T $KT_SESS
 
@@ -328,18 +328,17 @@ bind-key -T $KT_SESS $KBD_SESS_NEXT $CMD_SESS_NEXT
 bind-key -T $KT_SESS $KBD_SESS_TREE $CMD_SESS_TREE
 bind-key -T $KT_SESS $KBD_SESS_DEL $CMD_SESS_DEL
 bind-key -T $KT_SESS $KBD_SESS_RENAME $CMD_SESS_RENAME
-EOF
+"
 
 # goto.
 KT_GOTO=$KT_PREFIX-goto
-cat << EOF >> "$KBD_FILE"
+>> "$KBD_FILE" printf %s "\
 
 bind-key -T $KT_CMD $KBD_GOTO switch-client -T $KT_GOTO
-EOF
-
+"
 # goto-window.
 KT_GOTO_WIN=$KT_PREFIX-goto-window
-cat << EOF >> "$KBD_FILE"
+>> "$KBD_FILE" printf %s "\
 
 bind-key -T $KT_GOTO $KBD_GOTO_WIN switch-client -T $KT_GOTO_WIN
 
@@ -358,18 +357,18 @@ bind-key -T $KT_GOTO_WIN $KBD_GOTO_WIN_INDEX $CMD_GOTO_WIN_INDEX
 bind-key -T $KT_GOTO_WIN $KBD_GOTO_WIN_PREV $CMD_GOTO_WIN_PREV
 bind-key -T $KT_GOTO_WIN $KBD_GOTO_WIN_NEXT $CMD_GOTO_WIN_NEXT
 bind-key -T $KT_GOTO_WIN $KBD_GOTO_WIN_LAST $CMD_GOTO_WIN_LAST
-EOF
+"
 
 # goto-session.
 KT_GOTO_SESS=$KT_PREFIX-goto-session
-cat << EOF >> "$KBD_FILE"
+>> "$KBD_FILE" printf %s "\
 
 bind-key -T $KT_GOTO $KBD_GOTO_SESS switch-client -T $KT_GOTO_SESS
 
 bind-key -T $KT_GOTO_SESS $KBD_GOTO_SESS_PREV $CMD_GOTO_SESS_PREV
 bind-key -T $KT_GOTO_SESS $KBD_GOTO_SESS_NEXT $CMD_GOTO_SESS_NEXT
 bind-key -T $KT_GOTO_SESS $KBD_GOTO_SESS_TREE $CMD_GOTO_SESS_TREE
-EOF
+"
 
 # Load the keybindings.
 tmux source-file "$KBD_FILE"
